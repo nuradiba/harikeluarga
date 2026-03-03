@@ -84,16 +84,10 @@
   color: #f4f4f5;
 }
 
-.theme-light .ss-modal-box {
+.ss-modal-box {
   background-color: #ffffff;
   color: #111827;
   border: 1px solid #d4d4d8;
-}
-
-.theme-dark .ss-modal-box {
-  background-color: #18181b;
-  color: #f4f4f5;
-  border: 1px solid #3f3f46;
 }
 
 .theme-light #ss_modal::backdrop {
@@ -104,16 +98,10 @@
   background-color: rgb(0 0 0 / 0.75);
 }
 
-.theme-light .ss-modal-close {
-  background-color: #27272a;
+.ss-modal-close {
+  background-color: #d4d4d8;
   color: #111827;
-  border-color: #27272a;
-}
-
-.theme-dark .ss-modal-close {
-  background-color: #27272a;
-  color: #f4f4f5;
-  border-color: #27272a;
+  border-color: #d4d4d8;
 }
 
 .ss-modal-close,
