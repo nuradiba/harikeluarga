@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { MorphingText } from "@/components/ui/morphing-text"
 import { ShinyButton } from "@/components/ui/shiny-button"
-import Image from "next/image";
+import Image from "next/image"
+import confetti from "canvas-confetti"
+import { HyperText } from "@/components/ui/hyper-text"
 
 type FamilyMember = {
   id: number | string;
@@ -13,7 +15,9 @@ type FamilyMember = {
 
 export default function SecretSantaPage() {
   const [data, setData] = useState<FamilyMember[]>([]);
+  const [revealed, setRevealed] = useState(false);
   const openModal = () => {
+    setRevealed(false);
     const modal = document.getElementById("ss_modal") as HTMLDialogElement | null;
     modal?.showModal();
   };
@@ -33,6 +37,32 @@ export default function SecretSantaPage() {
 
     fetchData();
   }, []);
+
+  const handleClick = () => {
+    const end = Date.now() + 3 * 1000 // 3 seconds
+    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"]
+    const frame = () => {
+      if (Date.now() > end) return
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 0, y: 0.5 },
+        colors: colors,
+      })
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 1, y: 0.5 },
+        colors: colors,
+      })
+      requestAnimationFrame(frame)
+    }
+    frame()
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center font-sans">
@@ -78,10 +108,16 @@ export default function SecretSantaPage() {
               <button className="btn ss-modal-close btn-sm">X</button>
             </form>
             <div className="py-4">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <Image src="/cat-no-bg.gif" alt="Cat" width={180} height={180} />
-                <ShinyButton className="btn-lg mt-5">Reveal Your Secret Santa!</ShinyButton>
-              </div>
+              {revealed ? (
+                <div className="text-center"><HyperText duration={1000}>Hover me</HyperText></div>
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-4">
+                  <Image src="/cat-no-bg.gif" alt="Cat" width={180} height={180} />
+                  <ShinyButton className="btn-lg mt-5" onClick={() => { setRevealed(true); handleClick(); }}>
+                    Reveal Your Secret Santa!
+                  </ShinyButton>
+                </div>
+              )}
             </div>
           </div>
         </dialog>
