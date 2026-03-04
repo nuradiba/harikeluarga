@@ -43,8 +43,7 @@ export default function Home() {
           <span className="justify-items-center">
             <span>HARI</span>
             <span>KELUARGA</span>
-            <span>20B</span>
-            <span>2026</span>
+            <span>{new Date().getFullYear()}</span>
           </span>
         </span>
 

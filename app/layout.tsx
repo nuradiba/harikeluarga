@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hari Keluarga 20B - 2026",
-  description: "Hari Keluarga 20B Kampung Balik Bukit",
+  title: `Hari Keluarga ${currentYear}`,
+  description: `Hari Keluarga ${currentYear}`,
 };
 
 export default function RootLayout({
