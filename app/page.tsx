@@ -99,11 +99,15 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="text-sm flex items-center gap-1 mb-18">
+        <div className="text-sm flex items-center gap-1">
           <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24" >
             <path d="M12.88 2.53c-.35-.66-1.42-.66-1.77 0l-8.99 17c-.16.31-.15.68.03.98s.51.48.86.48h18c.35 0 .68-.18.86-.48s.19-.67.03-.98zM12 5.13l3.07 5.81-1.07.81-1.4-1.05a.99.99 0 0 0-1.2 0L10 11.75l-1.07-.81zM4.66 18.99l3.32-6.27 1.42 1.07c.36.27.84.27 1.2 0l1.4-1.05 1.4 1.05c.18.13.39.2.6.2s.42-.07.6-.2l1.42-1.07 3.32 6.27z"></path>
           </svg>
           <span>Jerai Triangle House, Yan, Kedah</span>
+        </div>
+
+        <div className="text-sm flex items-center gap-1 mb-18">
+          <span>3 - 4 Oktober 2026</span>
         </div>
 
         <div className="flex gap-5">

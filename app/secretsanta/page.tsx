@@ -103,14 +103,12 @@ export default function SecretSantaPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-16 py-32">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-14 py-32">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold">
             <MorphingText texts={["Secret", "Santa"]} />
           </h1>
-          <p className="mt-4 text-lg ss-text">
-            A fun way to randomly assign Secret Santas for your family or group of friends. Click the eye icon to reveal your assigned Secret Santa!
-          </p>
+          <p className="mt-4 text-lg ss-text"> Selamat datang ke halaman undian Secret Santa secara rawak! Adakah anda sudah sedia? Klik ikon mata untuk dedahkan siapakah Secret Santa.</p>
         </div>
         <div className="ss-table-card overflow-x-auto rounded-box border">
           <table className="ss-table table">
