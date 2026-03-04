@@ -25,7 +25,7 @@ function getTimeLeft(targetTime: number): TimeLeft {
 export default function Home() {
   // Change this to your own event date/time.
   const targetTime = useMemo(() => new Date("2026-09-03T23:59:59").getTime(), []);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(targetTime));
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const id = setInterval(() => {

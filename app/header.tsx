@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function Header({ children }: { children: React.ReactNode }) {
+export default function Header({ children, currentYear }: { children: React.ReactNode; currentYear: number }) {
   const [isLight, setIsLight] = useState(true);
 
   return (
@@ -38,7 +38,7 @@ export default function Header({ children }: { children: React.ReactNode }) {
       {children}
 
       <footer className="text-center text-xs py-4">
-        &copy; {new Date().getFullYear()} BLOKESHADE <br /> Made with ❤️ by Adiba
+        &copy; {currentYear} BLOKESHADE <br /> Made with ❤️ by Adiba
       </footer>
     </div>
   );
