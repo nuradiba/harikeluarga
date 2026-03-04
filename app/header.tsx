@@ -36,6 +36,10 @@ export default function Header({ children }: { children: React.ReactNode }) {
       </label>
 
       {children}
+
+      <footer className="text-center text-xs py-4">
+        &copy; {new Date().getFullYear()} BLOKESHADE <br /> Made with ❤️ by Adiba
+      </footer>
     </div>
   );
 }
