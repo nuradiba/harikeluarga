@@ -109,7 +109,7 @@ export default function SecretSantaPage() {
             <MorphingText texts={["Secret", "Santa"]} />
           </h1>
           <p className="mt-4 text-lg ss-text">
-            Cara paling seronok untuk bertukar hadiah dengan orang tersayang!
+            A fun way to randomly assign Secret Santas for your family or group of friends. Click the eye icon to reveal your assigned Secret Santa!
           </p>
         </div>
         <div className="ss-table-card overflow-x-auto rounded-box border">
@@ -117,7 +117,7 @@ export default function SecretSantaPage() {
             <thead>
               <tr>
                 <th></th>
-                <th>Nama</th>
+                <th>Name</th>
                 <th>Let&apos;s do this!</th>
               </tr>
             </thead>
