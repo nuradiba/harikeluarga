@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Header({ children, currentYear }: { children: React.ReactNode; currentYear: number }) {
   const [isLight, setIsLight] = useState(true);
+
+  useEffect(() => {
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", isLight ? "#ffffff" : "#000000");
+  }, [isLight]);
 
   return (
     <div
