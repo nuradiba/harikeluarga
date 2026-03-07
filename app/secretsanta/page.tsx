@@ -7,6 +7,7 @@ import { ShinyButton } from "@/components/ui/shiny-button"
 import Image from "next/image"
 import confetti from "canvas-confetti"
 import { HyperText } from "@/components/ui/hyper-text"
+import { SparklesText } from "@/components/ui/sparkles-text"
 
 type FamilyMember = {
   id: number | string;
@@ -73,7 +74,22 @@ export default function SecretSantaPage() {
   const handleReveal = async () => {
     if (selectedMemberId === null) return;
 
-    const candidates = data.filter((person) => person.id !== selectedMemberId);
+    const selectedMember = data.find((person) => person.id === selectedMemberId);
+    if (!selectedMember) return;
+
+    const usedSecretSantas = new Set(
+      data
+        .filter((person) => person.id !== selectedMemberId)
+        .map((person) => person.secret_santa)
+        .filter((name): name is string => Boolean(name))
+    );
+
+    const candidates = data.filter(
+      (person) =>
+        person.id !== selectedMemberId &&
+        person.name !== selectedMember.name &&
+        !usedSecretSantas.has(person.name)
+    );
     if (candidates.length === 0) return;
 
     const randomIndex = Math.floor(Math.random() * candidates.length);
@@ -156,6 +172,8 @@ export default function SecretSantaPage() {
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center gap-4">
+                <SparklesText>Hi {data.find((person) => person.id === selectedMemberId)?.name}</SparklesText>
+                <span className="text-sm">Ready to find out who your Secret Santa is? Click the button below to reveal your Secret Santa!</span>
                   <Image src="/cat-no-bg.gif" alt="Cat" width={180} height={180} />
                   <ShinyButton className="btn-lg mt-5" onClick={handleReveal}>
                     Reveal Your Secret Santa!
