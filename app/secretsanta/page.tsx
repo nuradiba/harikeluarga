@@ -33,7 +33,8 @@ export default function SecretSantaPage() {
     async function fetchData() {
       const { data: familyData, error } = await supabase
         .from("family")
-        .select("id,name,secret_santa,year");
+        .select("id,name,secret_santa,year")
+        .eq("is_secret_santa", true);
 
       if (error) {
         console.log(error);

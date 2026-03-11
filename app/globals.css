@@ -46,6 +46,29 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --animate-aurora: aurora 8s ease-in-out infinite alternate;
+  @keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+    }
+  25% {
+    background-position: 50% 100%;
+    transform: rotate(5deg) scale(1.1);
+    }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-3deg) scale(0.95);
+    }
+  75% {
+    background-position: 50% 0%;
+    transform: rotate(3deg) scale(1.05);
+    }
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+    }
+  }
 }
 
 .theme-light .ss-table-card {
@@ -74,6 +97,38 @@
 .theme-dark .ss-table thead th {
   background-color: #27272a;
   color: #f4f4f5;
+}
+
+.theme-light .ss-table thead td {
+  background-color: #f4f4f5;
+  color: #111827;
+  font-weight: 600;
+}
+
+.theme-dark .ss-table thead td {
+  background-color: #27272a;
+  color: #f4f4f5;
+  font-weight: 600;
+}
+
+.theme-light .ss-input {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1px solid #111827;
+}
+
+.theme-dark .ss-input {
+  background-color: #18181b;
+  color: #f4f4f5;
+  border: 1px solid #f4f4f5;
+}
+
+.theme-light .ss-input::placeholder {
+  color: #6b7280;
+}
+
+.theme-dark .ss-input::placeholder {
+  color: #a1a1aa;
 }
 
 .theme-light .ss-text {
