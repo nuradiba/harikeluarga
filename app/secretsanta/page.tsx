@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabaseClient"
 import { MorphingText } from "@/components/ui/morphing-text"
 import { ShinyButton } from "@/components/ui/shiny-button"
 import Image from "next/image"
