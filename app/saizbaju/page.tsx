@@ -59,18 +59,6 @@ export default function SaizBajuPage() {
         fetchData();
     }, []);
 
-    const scheduleSave = (familyId: number | string) => {
-        const key = String(familyId);
-        const existing = saveTimersRef.current[key];
-        if (existing) {
-            window.clearTimeout(existing);
-        }
-        const timerId = window.setTimeout(() => {
-            saveFamily(familyId);
-        }, 1000);
-        saveTimersRef.current[key] = timerId;
-    };
-
     const updateDraft = (familyId: number | string, field: "name_on_shirt" | "shirt_size", value: string) => {
         setDrafts((prev) => {
             const key = String(familyId);
@@ -86,7 +74,28 @@ export default function SaizBajuPage() {
                 },
             };
         });
-        scheduleSave(familyId);
+    };
+
+    const scheduleSave = (familyId: number | string) => {
+        const key = String(familyId);
+        const existing = saveTimersRef.current[key];
+        if (existing) {
+            window.clearTimeout(existing);
+        }
+        saveTimersRef.current[key] = window.setTimeout(() => {
+            saveFamily(familyId);
+            delete saveTimersRef.current[key];
+        }, 500);
+    };
+
+    const flushSave = (familyId: number | string) => {
+        const key = String(familyId);
+        const existing = saveTimersRef.current[key];
+        if (existing) {
+            window.clearTimeout(existing);
+            delete saveTimersRef.current[key];
+        }
+        saveFamily(familyId);
     };
 
     const saveFamily = async (familyId: number | string) => {
@@ -124,8 +133,26 @@ export default function SaizBajuPage() {
         setSaved((prev) => ({ ...prev, [key]: true }));
         window.setTimeout(() => {
             setSaved((prev) => ({ ...prev, [key]: false }));
-        }, 5000);
+        }, 2000);
     };
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            const pendingKeys = Object.keys(saveTimersRef.current);
+            if (pendingKeys.length === 0) return;
+            pendingKeys.forEach((key) => {
+                const timer = saveTimersRef.current[key];
+                if (timer) {
+                    window.clearTimeout(timer);
+                    delete saveTimersRef.current[key];
+                }
+                saveFamily(key);
+            });
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    }, []);
 
     return (
         <div className="flex min-h-screen items-center justify-center font-sans">
@@ -161,7 +188,11 @@ export default function SaizBajuPage() {
                                             className="input input-bordered ss-input w-full"
                                             placeholder="Nama Pada Baju"
                                             value={(drafts[String(family.id)]?.name_on_shirt ?? family.name_on_shirt ?? "")}
-                                            onChange={(e) => updateDraft(family.id, "name_on_shirt", e.target.value)}
+                                            onChange={(e) => {
+                                                updateDraft(family.id, "name_on_shirt", e.target.value);
+                                                scheduleSave(family.id);
+                                            }}
+                                            onBlur={() => flushSave(family.id)}
                                         />
                                         {saving[String(family.id)] && (
                                             <div className="mt-1 text-xs opacity-70">Saving…</div>
@@ -176,7 +207,11 @@ export default function SaizBajuPage() {
                                             className="input input-bordered ss-input w-full"
                                             placeholder="Saiz Baju"
                                             value={(drafts[String(family.id)]?.shirt_size ?? family.shirt_size ?? "")}
-                                            onChange={(e) => updateDraft(family.id, "shirt_size", e.target.value)}
+                                            onChange={(e) => {
+                                                updateDraft(family.id, "shirt_size", e.target.value);
+                                                scheduleSave(family.id);
+                                            }}
+                                            onBlur={() => flushSave(family.id)}
                                         />
                                         {saving[String(family.id)] && (
                                             <div className="mt-1 text-xs opacity-70">Saving…</div>
