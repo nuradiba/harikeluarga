@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { AuroraText } from "@/components/ui/aurora-text"
 import { supabase } from "@/lib/supabaseClient"
+import confetti from "canvas-confetti"
 
 type GoodiesPair = {
     id: number | string;
@@ -48,6 +49,38 @@ export default function GoodiesPage() {
         fetchGoodies();
     }, []);
 
+    const triggerConfetti = () => {
+        // eslint-disable-next-line react-hooks/purity
+        const end = Date.now() + 3 * 1000;
+        const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+
+        const frame = () => {
+            if (Date.now() > end) return;
+
+            confetti({
+                particleCount: 2,
+                angle: 60,
+                spread: 55,
+                startVelocity: 60,
+                origin: { x: 0, y: 0.5 },
+                colors,
+            });
+
+            confetti({
+                particleCount: 2,
+                angle: 120,
+                spread: 55,
+                startVelocity: 60,
+                origin: { x: 1, y: 0.5 },
+                colors,
+            });
+
+            requestAnimationFrame(frame);
+        };
+
+        frame();
+    };
+
     const revealColour = async (pairId: number | string) => {
         const selectedPair = pairs.find((pair) => pair.id === pairId);
         if (!selectedPair || selectedPair.colour) {
@@ -92,6 +125,8 @@ export default function GoodiesPage() {
                     : pair
             )
         );
+
+        triggerConfetti();
     };
 
     return (
@@ -100,8 +135,8 @@ export default function GoodiesPage() {
                 <h1 className="mb-8 text-4xl font-bold tracking-tighter md:text-5xl lg:text-7xl">
                     <AuroraText>Goodies</AuroraText>
                 </h1>
-                <p className="ss-text mt-4 text-center text-lg">
-                    Setiap pasangan perlu membeli goodies untuk 23 orang (tidak termasuk kanak-kanak) mengikut tema warna yang ditetapkan.
+                <p className="ss-text mt-1 text-center text-lg">
+                    Setiap pasangan perlu membeli barangan untuk 23 orang (tidak termasuk kanak-kanak) bertemakan warna yang ditetapkan. Susulan itu, setiap pasangan <b>WAJIB</b> menggayakan pakaian berkonsepkan warna tema.
                 </p>
 
                 <div className="ss-table-card mt-10 w-full overflow-x-auto rounded-box border">
@@ -110,7 +145,7 @@ export default function GoodiesPage() {
                             <tr>
                                 <th></th>
                                 <th>Pasangan</th>
-                                <th>Warna Tema</th>
+                                <th className="text-center">Warna Tema</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,7 +153,7 @@ export default function GoodiesPage() {
                                 <tr key={pair.id}>
                                     <th>{index + 1}</th>
                                     <td>{pair.second_pair ? `${pair.first_pair} & ${pair.second_pair}` : pair.first_pair}</td>
-                                    <td>
+                                    <td className="flex items-center justify-center">
                                         {pair.colour ? (
                                             pair.colour
                                         ) : (
@@ -128,7 +163,7 @@ export default function GoodiesPage() {
                                                 onClick={() => revealColour(pair.id)}
                                                 disabled={saving[String(pair.id)]}
                                             >
-                                                {saving[String(pair.id)] ? "Saving..." : "Buka"}
+                                                {saving[String(pair.id)] ? "Sedia..." : "Buka"}
                                             </button>
                                         )}
                                     </td>

@@ -139,6 +139,37 @@
   color: #f4f4f5;
 }
 
+.ss-button {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-light .ss-button {
+  background-color: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.theme-light .ss-button:hover,
+.theme-light .ss-button:focus-visible {
+  background-color: #1f2937;
+  border-color: #1f2937;
+  box-shadow: none;
+}
+
+.theme-dark .ss-button {
+  background-color: #f4f4f5;
+  color: #111827;
+  border-color: #f4f4f5;
+}
+
+.theme-dark .ss-button:hover,
+.theme-dark .ss-button:focus-visible {
+  background-color: #d4d4d8;
+  border-color: #d4d4d8;
+  color: #111827;
+  box-shadow: none;
+}
+
 .ss-modal-box {
   background-color: #ffffff;
   color: #111827;
