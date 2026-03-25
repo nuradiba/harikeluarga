@@ -186,7 +186,6 @@ export default function SaizBajuPage() {
                                         <input
                                             type="text"
                                             className="input input-bordered ss-input w-full"
-                                            placeholder="Nama Pada Baju"
                                             value={(drafts[String(family.id)]?.name_on_shirt ?? family.name_on_shirt ?? "")}
                                             onChange={(e) => {
                                                 updateDraft(family.id, "name_on_shirt", e.target.value);
@@ -205,7 +204,6 @@ export default function SaizBajuPage() {
                                         <input
                                             type="text"
                                             className="input input-bordered ss-input w-full"
-                                            placeholder="Saiz Baju"
                                             value={(drafts[String(family.id)]?.shirt_size ?? family.shirt_size ?? "")}
                                             onChange={(e) => {
                                                 updateDraft(family.id, "shirt_size", e.target.value);
