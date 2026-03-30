@@ -109,24 +109,20 @@ export default function Home() {
           <span>3 - 4 Oktober 2026</span>
         </div>
 
-        <div className="flex gap-5 mb-4">
-          <Link href="/goodies" className="relative">
-            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
-            <span className="fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-amber-600 hover:text-zinc-50">Goodies</span>
-          </Link>
-        </div>
-
-        <div className="flex gap-5 mb-5">
-          <Link href="/saizbaju" className="relative">
-            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
-            <span className="fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-violet-600 hover:text-zinc-50">Saiz Baju</span>
-          </Link>
-        </div>
-
-        <div className="flex gap-5 mb-4">
+        <div className="grid grid-flow-col gap-5">
           <Link href="/secretsanta" className="relative">
             <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
-            <span className="fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-rose-600 hover:text-zinc-50">Secret Santa</span>
+            <span className="whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-rose-600 hover:text-zinc-50">Secret Santa</span>
+          </Link>
+
+          <Link href="/goodies" className="relative">
+            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
+            <span className="whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-amber-600 hover:text-zinc-50">Goodies</span>
+          </Link>
+
+           <Link href="/saizbaju" className="relative">
+            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
+            <span className="whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-violet-600 hover:text-zinc-50">Saiz Baju</span>
           </Link>
         </div>
 

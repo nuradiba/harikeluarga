@@ -111,6 +111,16 @@
   font-weight: 600;
 }
 
+.theme-light .ss-table tbody th,
+.theme-light .ss-table tbody td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.theme-dark .ss-table tbody th,
+.theme-dark .ss-table tbody td {
+  border-bottom: 1px solid #3f3f46;
+}
+
 .theme-light .ss-input {
   background-color: #ffffff;
   color: #111827;
