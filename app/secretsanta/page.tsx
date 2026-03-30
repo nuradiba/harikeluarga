@@ -49,7 +49,8 @@ export default function SecretSantaPage() {
       const { data: familyData, error } = await supabase
         .from("family")
         .select("id,name,secret_santa,year,wishlist")
-        .eq("is_secret_santa", true);
+        .eq("is_secret_santa", true)
+        .order("name", { ascending: true });
 
       if (error) {
         console.log(error);
