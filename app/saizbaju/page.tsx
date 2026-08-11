@@ -4,6 +4,7 @@ import { AuroraText } from "@/components/ui/aurora-text"
 import { useEffect, useRef, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
+import { LoadingScreen } from "@/components/loading-screen";
 
 type Group = {
     id: number | string;
@@ -24,36 +25,34 @@ export default function SaizBajuPage() {
     const [drafts, setDrafts] = useState<Record<string, { shirt_size: string }>>({});
     const [saving, setSaving] = useState<Record<string, boolean>>({});
     const [saved, setSaved] = useState<Record<string, boolean>>({});
+    const [isLoading, setIsLoading] = useState(true);
     const saveTimersRef = useRef<Record<string, number>>({});
 
     useEffect(() => {
         async function fetchData() {
-            const { data: groupData, error } = await supabase
+            const [groupResult, familyResult] = await Promise.all([
+                supabase
                 .from("group")
-                .select("id,name");
-
-            if (error) {
-                console.log(error);
-            } else {
-                setGroup((groupData ?? []) as Group[]);
-            }
-        }
-
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        async function fetchData() {
-            const { data: familyData, error } = await supabase
+                .select("id,name"),
+                supabase
                 .from("family")
                 .select("id,name,group_id,shirt_size")
-                .order("name", { ascending: true });
+                .order("name", { ascending: true }),
+            ]);
 
-            if (error) {
-                console.log(error);
+            if (groupResult.error) {
+                console.log(groupResult.error);
             } else {
-                setFamily((familyData ?? []) as Family[]);
+                setGroup((groupResult.data ?? []) as Group[]);
             }
+
+            if (familyResult.error) {
+                console.log(familyResult.error);
+            } else {
+                setFamily((familyResult.data ?? []) as Family[]);
+            }
+
+            setIsLoading(false);
         }
 
         fetchData();
@@ -150,6 +149,10 @@ export default function SaizBajuPage() {
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => window.removeEventListener("beforeunload", handleBeforeUnload);
     }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <div className="flex min-h-screen items-center justify-center font-sans">

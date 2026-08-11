@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { AuroraText } from "@/components/ui/aurora-text"
 import { supabase } from "@/lib/supabaseClient"
 import confetti from "canvas-confetti"
+import { LoadingScreen } from "@/components/loading-screen"
 
 type GoodiesPair = {
     id: number | string;
@@ -30,6 +31,7 @@ const COLOUR_CHOICES = [
 export default function GoodiesPage() {
     const [pairs, setPairs] = useState<GoodiesPair[]>([]);
     const [saving, setSaving] = useState<Record<string, boolean>>({});
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchGoodies() {
@@ -40,14 +42,19 @@ export default function GoodiesPage() {
 
             if (error) {
                 console.error(error);
-                return;
+            } else {
+                setPairs((data ?? []) as GoodiesPair[]);
             }
 
-            setPairs((data ?? []) as GoodiesPair[]);
+            setIsLoading(false);
         }
 
         fetchGoodies();
     }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
 
     const triggerConfetti = () => {
         // eslint-disable-next-line react-hooks/purity

@@ -8,6 +8,7 @@ import Image from "next/image"
 import confetti from "canvas-confetti"
 import { HyperText } from "@/components/ui/hyper-text"
 import { SparklesText } from "@/components/ui/sparkles-text"
+import { LoadingScreen } from "@/components/loading-screen"
 
 type FamilyMember = {
   id: number | string;
@@ -24,6 +25,7 @@ export default function SecretSantaPage() {
   const [wishlistText, setWishlistText] = useState<string | null>(null);
   const [wishlists, setWishlists] = useState<Record<string, string | null>>({});
   const [isEditingWishlist, setIsEditingWishlist] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const hasSavedWishlist = wishlistText !== null && wishlistText.trim() !== "";
 
   const openModal = (memberId: number | string) => {
@@ -65,10 +67,16 @@ export default function SecretSantaPage() {
           }, {})
         );
       }
+
+      setIsLoading(false);
     }
 
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   const handleClick = () => {
     const end = Date.now() + 3 * 1000 // 3 seconds
