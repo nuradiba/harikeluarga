@@ -3,6 +3,7 @@
 import { AuroraText } from "@/components/ui/aurora-text"
 import { useEffect, useRef, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
+import Image from "next/image";
 
 type Group = {
     id: number | string;
@@ -14,14 +15,13 @@ type Family = {
     name: string;
     group_id: number | string;
     shirt_size: string;
-    name_on_shirt: string;
 };
 
 export default function SaizBajuPage() {
 
     const [data, setGroup] = useState<Group[]>([]);
     const [families, setFamily] = useState<Family[]>([]);
-    const [drafts, setDrafts] = useState<Record<string, { name_on_shirt: string; shirt_size: string }>>({});
+    const [drafts, setDrafts] = useState<Record<string, { shirt_size: string }>>({});
     const [saving, setSaving] = useState<Record<string, boolean>>({});
     const [saved, setSaved] = useState<Record<string, boolean>>({});
     const saveTimersRef = useRef<Record<string, number>>({});
@@ -46,7 +46,7 @@ export default function SaizBajuPage() {
         async function fetchData() {
             const { data: familyData, error } = await supabase
                 .from("family")
-                .select("id,name,group_id,shirt_size,name_on_shirt")
+                .select("id,name,group_id,shirt_size")
                 .order("name", { ascending: true });
 
             if (error) {
@@ -59,11 +59,10 @@ export default function SaizBajuPage() {
         fetchData();
     }, []);
 
-    const updateDraft = (familyId: number | string, field: "name_on_shirt" | "shirt_size", value: string) => {
+    const updateDraft = (familyId: number | string, field: "shirt_size", value: string) => {
         setDrafts((prev) => {
             const key = String(familyId);
             const current = prev[key] ?? {
-                name_on_shirt: families.find((f) => f.id === familyId)?.name_on_shirt ?? "",
                 shirt_size: families.find((f) => f.id === familyId)?.shirt_size ?? "",
             };
             return {
@@ -101,7 +100,6 @@ export default function SaizBajuPage() {
     const saveFamily = async (familyId: number | string) => {
         const key = String(familyId);
         const current = drafts[key] ?? {
-            name_on_shirt: families.find((f) => f.id === familyId)?.name_on_shirt ?? "",
             shirt_size: families.find((f) => f.id === familyId)?.shirt_size ?? "",
         };
 
@@ -110,7 +108,6 @@ export default function SaizBajuPage() {
         const { error } = await supabase
             .from("family")
             .update({
-                name_on_shirt: current.name_on_shirt,
                 shirt_size: current.shirt_size,
             })
             .eq("id", familyId);
@@ -125,7 +122,7 @@ export default function SaizBajuPage() {
         setFamily((prev) =>
             prev.map((f) =>
                 f.id === familyId
-                    ? { ...f, name_on_shirt: current.name_on_shirt, shirt_size: current.shirt_size }
+                    ? { ...f, shirt_size: current.shirt_size }
                     : f
             )
         );
@@ -161,17 +158,22 @@ export default function SaizBajuPage() {
                     Saiz <AuroraText>Baju</AuroraText>
                 </h1>
 
+                <div>
+                    <Image alt="Saiz Baju Dewasa" src="/saiz_baju_dewasa.jpeg"  width={0} height={0} sizes="100vw" className="w-full h-auto" />
+                    <Image alt="Saiz Baju Budak" src="/saiz_baju_budak.jpeg" width={0} height={0} sizes="100vw" className="w-full h-auto"  />
+                </div>
+
+
                 {data.map((person) => (
                     <div className="ss-table-card w-full md:w-1/2 overflow-x-auto rounded-box border mb-8" key={person.id}>
                         <table className="ss-table table w-full">
                             <thead>
                                 <tr>
-                                    <td colSpan={4} className="text-center uppercase">Family {person.name}</td>
+                                    <td colSpan={3} className="text-center uppercase">Family {person.name}</td>
                                 </tr>
                                 <tr>
                                     <th></th>
                                     <th>Nama</th>
-                                    <th>Nama Pada Baju</th>
                                     <th>Saiz Baju</th>
                                 </tr>
                             </thead>
@@ -182,24 +184,6 @@ export default function SaizBajuPage() {
                                 <tr key={family.id}>
                                     <td>{index + 1}</td>
                                     <td>{family.name}</td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="input input-bordered ss-input w-full"
-                                            value={(drafts[String(family.id)]?.name_on_shirt ?? family.name_on_shirt ?? "")}
-                                            onChange={(e) => {
-                                                updateDraft(family.id, "name_on_shirt", e.target.value);
-                                                scheduleSave(family.id);
-                                            }}
-                                            onBlur={() => flushSave(family.id)}
-                                        />
-                                        {saving[String(family.id)] && (
-                                            <div className="mt-1 text-xs opacity-70">Saving…</div>
-                                        )}
-                                        {saved[String(family.id)] && (
-                                            <div className="mt-1 text-xs text-green-600">Saved</div>
-                                        )}
-                                    </td>
                                     <td>
                                         <input
                                             type="text"
