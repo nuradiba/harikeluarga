@@ -3,8 +3,8 @@
 import { AuroraText } from "@/components/ui/aurora-text"
 import { useEffect, useRef, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
-import Image from "next/image";
-import { LoadingScreen } from "@/components/loading-screen";
+import Image from "next/image"
+import { LoadingScreen } from "@/components/loading-screen"
 
 type Group = {
     id: number | string;

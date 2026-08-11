@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
+import { Highlighter } from "@/components/ui/highlighter"
+import Image from "next/image"
 
 type TimeLeft = {
   days: number;
@@ -26,6 +28,7 @@ export default function Home() {
   // Change this to your own event date/time.
   const targetTime = useMemo(() => new Date("2026-10-02T23:59:59").getTime(), []);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isThemeImageOpen, setIsThemeImageOpen] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -105,11 +108,52 @@ export default function Home() {
           <span>Jerai Triangle House, Yan, Kedah</span>
         </div>
 
-        <div className="text-sm flex items-center gap-1 mb-18">
+        <div className="text-sm flex items-center gap-1 mb-5">
           <span>3 - 4 Oktober 2026</span>
         </div>
 
-        <div className="flex flex-wrap gap-5">
+        <div className="text-sm flex items-center mb-1">
+          <span>Tema:&nbsp;&nbsp;<Highlighter action="highlight" color="#87CEFA">Mami Jarum</Highlighter></span>
+        </div>
+
+        <button
+          type="button"
+          className="cursor-zoom-in"
+          onClick={() => setIsThemeImageOpen(true)}
+          aria-label="Lihat gambar tema Mami Jarum dalam saiz penuh"
+        >
+          <Image alt="Mami Jarum" src="/tema.jpg" width={100} height={0} className="h-auto" />
+        </button>
+
+        {isThemeImageOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Gambar tema Mami Jarum"
+            onClick={() => setIsThemeImageOpen(false)}
+          >
+            <div className="relative h-[90vh] w-[95vw]" onClick={(event) => event.stopPropagation()}>
+              <Image
+                alt="Mami Jarum"
+                src="/tema.jpg"
+                fill
+                sizes="95vw"
+                className="object-contain"
+              />
+              <button
+                type="button"
+                className="btn btn-circle btn-sm absolute right-2 top-2"
+                onClick={() => setIsThemeImageOpen(false)}
+                aria-label="Tutup gambar"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-5 mt-10">
           <Link href="/secretsanta" className="relative">
             <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
             <span className="text-lg whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-rose-600 hover:text-zinc-50">Secret Santa</span>
