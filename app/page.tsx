@@ -154,6 +154,11 @@ export default function Home() {
         )}
 
         <div className="flex flex-wrap gap-5 mt-10">
+          <Link href="/tentative" className="relative">
+            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
+            <span className="text-lg whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-blue-600 hover:text-zinc-50">Tentatif</span>
+          </Link>
+
           <Link href="/secretsanta" className="relative">
             <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
             <span className="text-lg whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-rose-600 hover:text-zinc-50">Secret Santa</span>
@@ -162,11 +167,6 @@ export default function Home() {
           <Link href="/goodies" className="relative">
             <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
             <span className="text-lg whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-amber-600 hover:text-zinc-50">Goodies</span>
-          </Link>
-
-           <Link href="/saizbaju" className="relative">
-            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-black"></span>
-            <span className="text-lg whitespace-nowrap fold-bold relative inline-block h-full w-full rounded border border-black bg-white px-3 py-1 font-bold text-black transition duration-100 hover:bg-fuchsia-600 hover:text-zinc-50">Saiz Baju</span>
           </Link>
 
           <Link href="/arrangementrumah" className="relative">
